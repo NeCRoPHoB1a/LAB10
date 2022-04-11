@@ -3,8 +3,6 @@
 #include "fstream"
 #include "string"
 #include <vector>
-#include <map>
-#include <functional>
 
 
 using namespace std;
@@ -14,10 +12,10 @@ ifstream in_users("users.txt");
 ifstream in_1("1.txt");
 ifstream in_2("2.txt");
 ifstream in_3("3.txt");
-ofstream out_users("users.txt");
-ofstream out_1("1.txt");
-ofstream out_2("2.txt");
-ofstream out_3("3.txt");
+fstream out_users("users.txt", ios::app | ios::out);
+fstream out_1("1.txt", ios::app| ios::out);
+fstream out_2("2.txt", ios::app | ios::out);
+fstream out_3("3.txt", ios::app | ios::out);
 
 
 struct users
@@ -35,10 +33,11 @@ void users::getdata()
 }
 void users::setdata()
 {
-    out_users << log;
-    out_users << pass;
-    out_users << permision;
-    out_users << "\n";
+    out_users << "\n" << "\n";
+    out_users << log<< "\n";
+    out_users << pass<< "\n";
+    out_users << permision << "\n";
+
 }
 
 
@@ -68,20 +67,20 @@ class Admin{
 private:
     string cm;
 public:
-    Admin() { cout << "\t1. Добавить пользывателей\n0. Выйти"; }
+    Admin() { cout << "\t1. Добавить пользывателей\n\t0. Выйти\n>>"; }
     void enter_user() 
     {   
         users u;
         cout << "Логин:";
-        getline(cin, u.log);
+        cin>>u.log;
         cout << "Пароль:";
-        getline(cin, u.pass);
+        cin>>u.pass;
 
         u.permision = "adm";
         while (u.permision == "adm")
         {
             cout << "Права:";
-            getline(cin, u.permision);
+            cin>>u.permision;
         }
         u.setdata();
     }
@@ -94,30 +93,31 @@ private:
     string cm,s;
     void print() { while (in_3.peek() != EOF) { in_3 >> s; cout << s << endl; } }
 public:
-    Read() { cout << "\t1. Просмотреть файлй\t\n0. Выйти"; }
+    Read() { cout << "\t1. Просмотреть файлй\n\t0. Выйти\n>>"; }
     void cmd() { cin >> cm; if (cm == "1") { print(); }}
 };
 
-class Write : protected Read {
+class Write  {
 private:
     string cm, s;
     void print() { while (in_3.peek() != EOF) { in_3 >> s; cout << s << endl; } }
     void qwest()
     {
+        ofstream bbb("3.txt");
+        bbb.close();
+
         int a, b;
         while (in_1.peek() != EOF)
         { 
             in_1 >> a; 
             in_2 >> b;
-            if (a == pow(2, b)) { out_3 << a; }
+            if (a == pow(2, b)) { out_3 << a<<"\n"; }
         }
     }
 public:
-    Write() { cout << "\t1. Просмотреть файлй\t\n2.Запись\t\n0. Выйти"; }
+    Write() { cout << "\t1. Просмотреть файлй\n\t2. Запись\n\t0. Выйти\n>>"; }
     void cmd() { cin >> cm; if (cm == "1") { print(); }if (cm == "2") { qwest(); }}
 };
-
-
 
 
 
@@ -143,10 +143,11 @@ int main()
     while (flag_data<0)//ввод с клавы
     {
         cout << "Введите логин" << endl;
-        getline(cin, enter_log);
+        cin>>enter_log;
         cout << "Введите пароль" << endl;
-        getline(cin, enter_pass);
-
+        cin>>enter_pass;
+        //enter_log = "u3";
+        //enter_pass = "123";
         flag_data = check_data(enter_log,enter_pass, list);
        
     }
