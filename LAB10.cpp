@@ -36,7 +36,7 @@ void users::setdata()
     out_users << "\n" << "\n";
     out_users << log<< "\n";
     out_users << pass<< "\n";
-    out_users << permision << "\n";
+    out_users << permision;
 
 }
 
@@ -76,12 +76,10 @@ public:
         cout << "Пароль:";
         cin>>u.pass;
 
-        u.permision = "adm";
-        while (u.permision == "adm")
-        {
-            cout << "Права:";
-            cin>>u.permision;
-        }
+        cout << "adm-админ\nwr-читать писать\nr-читать\n";
+        cout << "Права:";
+        
+        cin>>u.permision;
         u.setdata();
     }
     void cmd() {cin >> cm;if (cm == "1"){enter_user();}}
@@ -90,8 +88,8 @@ public:
 
 class Read  {
 private:
-    string cm,s;
-    void print() { while (in_3.peek() != EOF) { in_3 >> s; cout << s << endl; } }
+    string cm,s1,s2;
+    void print() { cout << "файл 1\tфайл 2\n"; while (in_1.peek() != EOF) { in_1 >> s1; in_2 >> s2; cout << s1 << "\t" << s2 << endl; } }
 public:
     Read() { cout << "\t1. Просмотреть файлй\n\t0. Выйти\n>>"; }
     void cmd() { cin >> cm; if (cm == "1") { print(); }}
@@ -99,8 +97,8 @@ public:
 
 class Write  {
 private:
-    string cm, s;
-    void print() { while (in_3.peek() != EOF) { in_3 >> s; cout << s << endl; } }
+    string cm, s1,s2;
+    void print() { cout << "файл 1\tфайл 2\n"; while (in_1.peek() != EOF) { in_1 >> s1; in_2 >> s2; cout << s1 << "\t" << s2 << endl; } }
     void qwest()
     {
         ofstream bbb("3.txt");
